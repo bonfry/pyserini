@@ -95,7 +95,7 @@ def define_search_args(parser):
     parser.add_argument('--rm3', action='store_true', help="Use RM3")
     parser.add_argument('--rocchio', action='store_true', help="Use Rocchio")
     parser.add_argument('--rocchio-use-negative', action='store_true', help="Use nonrelevant labels in Rocchio")
-    parser.add_argument('--qld', action='store_true', help="Use QLD")
+    parser.add_argument('--qld', type=int, action='store_true', help="Use QLD")
 
     parser.add_argument('--language', type=str, help='language code for BM25, e.g. zh for Chinese', default='en')
     parser.add_argument('--pretokenized', action='store_true', help="Boolean switch to accept pre-tokenized topics")
@@ -222,7 +222,7 @@ if __name__ == "__main__":
 
     if args.qld:
         search_rankers.append('qld')
-        searcher.set_qld()
+        searcher.set_qld(mu=args.qld)
     elif args.bm25:
         search_rankers.append('bm25')
         set_bm25_parameters(searcher, args.index, args.k1, args.b)
